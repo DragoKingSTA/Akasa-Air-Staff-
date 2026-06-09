@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Abhishek M, Customer Service Staff / Officer at Akasa Air. Dedicated to aviation excellence, passenger care, and airport operations.">
+    <title>Abhishek M | Akasa Air Customer Service Staff / Officer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Icons (Lucide Icons via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="sky-background">
+        <div class="clouds"></div>
+        <div class="sky-glow-gold"></div>
+    </div>
+
+    <!-- Boarding Pass Verification Screen (Hero Intro) -->
+    <div class="gate-verification-screen" id="gateScreen">
+        <div class="verification-container">
+            <div class="scanner-header">
+                <div class="logo-area">
+                    <img src="logo.png" alt="Akasa Air Logo" class="akasa-logo-img">
+                    <span class="logo-text">Akasa <span>Air</span></span>
+                </div>
+                <div class="gate-status">
+                    <span class="status-indicator-dot pulsing"></span>
+                    <span class="status-text">GATE 26 OPEN</span>
+                </div>
+            </div>
+            
+            <div class="boarding-pass-card" id="boardingPass">
+                <div class="pass-header">
+                    <div class="carrier-info">
+                        <span class="carrier-title">BOARDING PASS</span>
+                        <span class="flight-no">FLIGHT QP 2026</span>
+                    </div>
+                    <div class="barcode-area">
+                        <div class="mini-barcode"></div>
+                    </div>
+                </div>
+                
+                <div class="pass-body">
+                    <div class="airport-codes">
+                        <div class="airport" style="width: 100%; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                            <span class="code" style="font-size: 1.5rem; letter-spacing: 1px; color: #ffffff;">ABHISHEK M</span>
+                            <span class="city" style="font-size: 0.8rem; color: var(--color-gold); font-weight: 700; letter-spacing: 1.5px; margin-top: 4px;">BLR STATION (BENGALURU)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="passenger-details">
+                        <div class="detail">
+                            <span class="label">PASSENGER NAME</span>
+                            <span class="value uppercase">Abhishek M</span>
+                        </div>
+                        <div class="detail">
+                            <span class="label">SEAT</span>
+                            <span class="value font-gold">01A</span>
+                        </div>
+                        <div class="detail">
+                            <span class="label">BOARDING TIME</span>
+                            <span class="value" id="boardingTime">01:06 AM</span>
+                        </div>
+                        <div class="detail">
+                            <span class="label">ROLE</span>
+                            <span class="value font-purple">Customer Service Staff / Officer</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pass-footer">
+                    <div class="scan-instructions">
+                        <p>Place card under terminal scanner to enter portfolio</p>
+                    </div>
+                    <button class="scan-button" id="scanBtn">
+                        <span class="scan-btn-text">SCAN BOARDING PASS</span>
+                        <div class="scanner-wave"></div>
+                    </button>
+                </div>
+                
+                <div class="laser-scanner-line" id="laserLine"></div>
+                <div class="granted-overlay" id="grantedOverlay">
+                    <div class="granted-box">
+                        <i data-lucide="check-circle" class="success-check"></i>
+                        <h3>BOARDING GRANTED</h3>
+                        <p>Welcome Aboard Abhishek M</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Website (Hidden initially until scanned) -->
+    <div class="portfolio-content hidden" id="portfolioMain">
+        <!-- Navigation Header -->
+        <header class="app-header">
+            <div class="header-container">
+                <a href="#" class="header-logo">
+                    <span class="logo-dot orange"></span>
+                    <span class="logo-dot purple"></span>
+                    <span class="logo-text">ABHISHEK M</span>
+                </a>
+                <nav class="nav-links">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#roles" class="nav-link">Roles</a>
+                    <a href="#brand" class="nav-link">Akasa Air</a>
+                    <a href="#contact" class="nav-link booking-btn">Contact Desk</a>
+                </nav>
+                <div class="header-clock" id="headerClock">
+                    <i data-lucide="clock" class="clock-icon"></i>
+                    <span class="time-display" id="timeDisplay">12:00:00 AM</span>
+                    <span class="date-display" id="dateDisplay">10 JUN 2026</span>
+                    <span class="pax-badge" id="paxBadge" title="Click to enter passenger name">Passenger: Guest</span>
+                </div>
+                <div class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i data-lucide="menu"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#home" class="mobile-nav-link">Home</a>
+            <a href="#about" class="mobile-nav-link">About</a>
+            <a href="#roles" class="mobile-nav-link">Roles</a>
+            <a href="#brand" class="mobile-nav-link">Akasa Air</a>
+            <a href="#contact" class="mobile-nav-link">Contact Desk</a>
+        </div>
+
+        <main>
+            <!-- Hero Showcase Section -->
+            <section id="home" class="hero-section">
+                <div class="hero-container">
+                    <div class="hero-banner-card">
+                        <!-- Custom CSS Crops the profile photo out of banner.png -->
+                        <div class="banner-display" style="background-image: url('banner.png');"></div>
+                        <div class="banner-overlay"></div>
+                        
+                        <div class="hero-profile-area">
+                            <div class="profile-frame">
+                                <div class="profile-pic" style="background-image: url('abhishek_portrait.jpg');"></div>
+                                <div class="badge-akasa">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="badge-plane">
+                                        <path d="M17.8 20.197a15.686 15.686 0 0 0 .86-3.419c.15-.968.18-1.942.08-2.909l-7.79-7.79a3.86 3.86 0 0 0-5.46 5.46l7.79 7.79c.967.1 1.941.07 2.909-.08a15.686 15.686 0 0 0 3.419-.86Z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div class="hero-intro-text">
+                                <span class="tag-airline">AKASA AIR CREW</span>
+                                <h1>ABHISHEK M</h1>
+                                <h2>Customer Service Staff / Officer</h2>
+                                <p class="hero-desc">
+                                    Ensuring warmth, efficiency, and safety at the frontlines of India's most dependable airline. Specializing in passenger satisfaction, gate operations, and smooth travel experiences.
+                                </p>
+                                
+                                <div class="quick-contact-pills">
+                                    <a href="mailto:dragokingsta@gmail.com" class="contact-pill">
+                                        <i data-lucide="mail" class="pill-icon"></i>
+                                        <span>dragokingsta@gmail.com</span>
+                                    </a>
+                                    <span class="contact-pill no-link">
+                                        <i data-lucide="map-pin" class="pill-icon"></i>
+                                        <span>Kempegowda Int'l Airport (BLR), Bengaluru</span>
+                                    </span>
+                                </div>
+
+                                <div class="hero-actions">
+                                    <a href="#about" class="btn btn-primary">
+                                        <span>Read Operations Profile</span>
+                                        <i data-lucide="arrow-right"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/abhishek-m-29b90a256/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                                        <i data-lucide="linkedin"></i>
+                                        <span>LinkedIn Profile</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Me & Core Capabilities -->
+            <section id="about" class="about-section scroll-reveal">
+                <div class="section-container">
+                    <div class="section-header">
+                        <span class="section-tag">WELCOME ABOARD</span>
+                        <h2 class="section-title">About Abhishek M</h2>
+                        <div class="title-underline"></div>
+                    </div>
+                    
+                    <div class="about-grid">
+                        <div class="about-text-card">
+                            <h3>Empathic Service at Bengaluru International Airport</h3>
+                            <p>
+                                Working as a Customer Service Staff / Officer at <strong>Kempegowda International Airport (BLR)</strong> in Bengaluru, I stand at the frontline of Akasa Air's passenger journey. My mission is to translate Akasa's philosophy of <strong>warmth, reliability, and empathy</strong> into every interaction, whether resolving check-in irregularities, facilitating smooth passenger check-ins, or ensuring flight delays are handled with care and efficiency.
+                            </p>
+                            <p>
+                                With roots in Kerala and my current station at the state-of-the-art airport in Bangalore, I bring multicultural understanding, bilingual communication, and a passionate service-oriented mindset. My goal is to grow in aviation ground operations, contributing directly to on-time-performance and creating memorable travel experiences.
+                            </p>
+                        </div>
+                        
+                        <div class="skills-card">
+                            <h3>Core Airport Operations Skills</h3>
+                            <div class="skills-list">
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span>Passenger Care & Check-In</span>
+                                        <span>95%</span>
+                                    </div>
+                                    <div class="skill-bar-container">
+                                        <div class="skill-bar" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span>Gate & Boarding Operations</span>
+                                        <span>45%</span>
+                                    </div>
+                                    <div class="skill-bar-container">
+                                        <div class="skill-bar" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span>Conflict Resolution & Delay Management</span>
+                                        <span>88%</span>
+                                    </div>
+                                    <div class="skill-bar-container">
+                                        <div class="skill-bar" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span>Aviation Safety & Regulatory Compliance (DGCA)</span>
+                                        <span>92%</span>
+                                    </div>
+                                    <div class="skill-bar-container">
+                                        <div class="skill-bar" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div class="skill-info">
+                                        <span>Baggage Tracing (WorldTracer) & Services</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="skill-bar-container">
+                                        <div class="skill-bar" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Roles & Responsibilities Section (Interactive Tabs) -->
+            <section id="roles" class="roles-section scroll-reveal">
+                <div class="section-container">
+                    <div class="section-header">
+                        <span class="section-tag">FLIGHT STAGES</span>
+                        <h2 class="section-title">Roles & Responsibilities</h2>
+                        <div class="title-underline"></div>
+                    </div>
+                    
+                    <div class="roles-interactive-wrapper">
+                        <!-- Navigation Tabs -->
+                        <div class="roles-tabs-nav">
+                            <button class="role-tab-btn active" data-target="checkin">
+                                <i data-lucide="contact-2"></i>
+                                <span>Check-In & Passenger Care</span>
+                            </button>
+                            <button class="role-tab-btn" data-target="gate">
+                                <i data-lucide="door-open"></i>
+                                <span>Gate & Boarding</span>
+                            </button>
+                            <button class="role-tab-btn" data-target="baggage">
+                                <i data-lucide="luggage"></i>
+                                <span>Baggage Operations</span>
+                            </button>
+                            <button class="role-tab-btn" data-target="crisis">
+                                <i data-lucide="shield-alert"></i>
+                                <span>Disruption Handling</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Tabs Content -->
+                        <div class="roles-tabs-content">
+                            <!-- Tab 1: Check-in -->
+                            <div class="role-tab-panel active" id="checkin">
+                                <div class="panel-layout">
+                                    <div class="panel-icon-side">
+                                        <div class="large-icon-circle bg-orange">
+                                            <i data-lucide="contact-2"></i>
+                                        </div>
+                                        <h4>Frontline Ambassadors</h4>
+                                    </div>
+                                    <div class="panel-details-side">
+                                        <h3>Passenger Handling & Check-In Services</h3>
+                                        <p>Managing the airport lobby and check-in counters as the first point of physical contact with passengers.</p>
+                                        <ul class="roles-bullet-list">
+                                            <li><i data-lucide="check" class="check-icon"></i> Verifying ticket reservations, travel documents, visas, and identification codes.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Assigning seating, managing upgrades, and issuing boarding passes accurately.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Inspecting and checking in baggage according to weight limits and security guidelines.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Managing special-needs passengers, including wheelchair assistance and unaccompanied minors.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tab 2: Gate -->
+                            <div class="role-tab-panel" id="gate">
+                                <div class="panel-layout">
+                                    <div class="panel-icon-side">
+                                        <div class="large-icon-circle bg-purple">
+                                            <i data-lucide="door-open"></i>
+                                        </div>
+                                        <h4>Flight Gateway</h4>
+                                    </div>
+                                    <div class="panel-details-side">
+                                        <h3>Gate Operations & Boarding Control</h3>
+                                        <p>Coordinating boarding procedures at departure gates to ensure flights depart safely and on schedule.</p>
+                                        <ul class="roles-bullet-list">
+                                            <li><i data-lucide="check" class="check-icon"></i> Conducting clear boarding calls, prioritizing families, elderly, and premium flyers.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Scanning boarding passes, matching identities, and reconciling passenger manifests.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Coordinating with the flight crew, load master, and ramp agents to secure on-time departure.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Handling standby lists and seat upgrades dynamically during final boarding phases.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tab 3: Baggage -->
+                            <div class="role-tab-panel" id="baggage">
+                                <div class="panel-layout">
+                                    <div class="panel-icon-side">
+                                        <div class="large-icon-circle bg-gold">
+                                            <i data-lucide="luggage"></i>
+                                        </div>
+                                        <h4>Baggage Integrity</h4>
+                                    </div>
+                                    <div class="panel-details-side">
+                                        <h3>Baggage Services & Recovery</h3>
+                                        <p>Managing arrival luggage processing and assisting passengers when bags are delayed, damaged, or lost.</p>
+                                        <ul class="roles-bullet-list">
+                                            <li><i data-lucide="check" class="check-icon"></i> Logging missing baggage files in systems (WorldTracer) and generating Property Irregularity Reports (PIR).</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Coordinating with operations teams to locate bags and arrange courier delivery to passengers.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Assessing damaged baggage claims and processing reimbursement or repair requests.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Managing leftover baggage at arrival carousels and handling customs handovers.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tab 4: Crisis -->
+                            <div class="role-tab-panel" id="crisis">
+                                <div class="panel-layout">
+                                    <div class="panel-icon-side">
+                                        <div class="large-icon-circle bg-dark">
+                                            <i data-lucide="shield-alert"></i>
+                                        </div>
+                                        <h4>Disruption Shield</h4>
+                                    </div>
+                                    <div class="panel-details-side">
+                                        <h3>Flight Disruption & Conflict Handling</h3>
+                                        <p>Providing professional, empathetic support during irregular operations (delays, weather cancellations, reroutes).</p>
+                                        <ul class="roles-bullet-list">
+                                            <li><i data-lucide="check" class="check-icon"></i> Serving as the calming presence for anxious or frustrated passengers during long delays.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Re-routing passenger tickets on alternate flights and processing compensation/refund vouchers.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Arranging welfare facilities, meals, water, and hotel accommodations for disrupted flyers.</li>
+                                            <li><i data-lucide="check" class="check-icon"></i> Delivering clear, transparent briefings regarding technical delays or operational situations.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Akasa Air Section -->
+            <section id="brand" class="brand-section scroll-reveal">
+                <div class="section-container">
+                    <div class="section-header">
+                        <span class="section-tag">IT'S YOUR SKY</span>
+                        <h2 class="section-title">Akasa Air</h2>
+                        <div class="title-underline"></div>
+                    </div>
+                    
+                    <div class="brand-grid">
+                        <div class="brand-logo-card">
+                            <div class="akasa-logo-brand-container">
+                                <img src="logo.png" alt="Akasa Air Official Logo" class="brand-logo-img-large">
+                                <div class="logo-inner-content">
+                                    <h3>THE RISING "A"</h3>
+                                    <p>Symbolizing the warmth of the rising sun and the flight of an aircraft ascending to new heights.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="brand-details">
+                            <h3>About the Airline</h3>
+                            <p>
+                                Launched in August 2022, <strong>Akasa Air</strong> is India's fastest-growing and most dependable airline. Headquartered in Mumbai, the airline is built on a strong foundation of safety, efficiency, customer warmth, and environmental sustainability. 
+                            </p>
+                            <p>
+                                Akasa Air operates a modern, fuel-efficient fleet of <strong>Boeing 737 MAX</strong> aircraft powered by CFM LEAP-1B engines, contributing to reduced carbon emissions. The airline connects over <strong>20+ domestic and international destinations</strong>, offering passengers amenities like spacious seating, USB chargers at every seat, and a customized menu (Café Akasa). Akasa's eco-friendly uniforms for crew and ground staff are made from recycled ocean plastic.
+                            </p>
+                            
+                            <div class="brand-pillars">
+                                <div class="pillar">
+                                    <i data-lucide="heart" class="pillar-icon text-orange"></i>
+                                    <h4>Warmth & Empathy</h4>
+                                    <p>Putting customer comfort and feelings at the center of everything we do.</p>
+                                </div>
+                                <div class="pillar">
+                                    <i data-lucide="zap" class="pillar-icon text-purple"></i>
+                                    <h4>Eco-Sustainability</h4>
+                                    <p>Empowering green aviation with fuel-efficient fleets and recycled wear.</p>
+                                </div>
+                                <div class="pillar">
+                                    <i data-lucide="shield" class="pillar-icon text-gold"></i>
+                                    <h4>Safety & Reliability</h4>
+                                    <p>Maintaining strict compliance with international safety standards and DGCA regulations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SVG Animated Route Path Map -->
+                    <div class="route-map-container">
+                        <h3>Abhishek's Station: Kempegowda International Airport, Bengaluru</h3>
+                        <p class="map-station-text" style="color: #a0a0ab; font-size: 0.9rem; margin-bottom: 20px;">As a new joiner at <strong>Kempegowda International Airport (BLR)</strong> in Bengaluru, Abhishek M focuses exclusively on checking in all passengers (pax) from curbside to counters, verifying travel documents and securing baggage tagging for departures.</p>
+                        <div class="map-wrapper">
+                            <svg class="flight-route-svg" viewBox="0 0 800 240" fill="none">
+                                <path id="flightPath" d="M100,120 Q250,30 400,120 T700,120" stroke="rgba(255, 109, 0, 0.25)" stroke-width="3" stroke-dasharray="8 8" />
+                                <circle cx="100" cy="120" r="8" fill="var(--color-orange)" />
+                                <circle cx="400" cy="120" r="6" fill="var(--color-purple)" />
+                                <circle cx="700" cy="120" r="8" fill="var(--color-gold)" />
+                                
+                                <text x="100" y="150" fill="#a0a0a5" font-size="12" text-anchor="middle">PAX ARRIVAL</text>
+                                <text x="400" y="150" fill="#a0a0a5" font-size="12" text-anchor="middle">DOCS & BAGS CHECK-IN</text>
+                                <text x="700" y="150" fill="#a0a0a5" font-size="12" text-anchor="middle">BOARDING PASS PRINTED (BLR)</text>
+                                
+                                <!-- Animated Plane Icon -->
+                                <g id="movingPlane" transform="translate(100, 120) rotate(0)">
+                                    <path d="M15 0 L-10 -10 L-5 0 L-10 10 Z" fill="var(--color-orange)" />
+                                    <circle cx="0" cy="0" r="4" fill="#fff" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Akasa Air Operations Gallery & Slideshow -->
+                    <div class="brand-gallery scroll-reveal" style="margin-top: 50px;">
+                        <h3 style="margin-bottom: 25px; text-align: center;">Akasa Air Operations Gallery</h3>
+                        <div class="gallery-split-layout">
+                            <!-- Left: Static Featured Aircraft -->
+                            <div class="gallery-item featured-item" style="display: flex; flex-direction: column;">
+                                <img src="akasa_aircraft.png" alt="Akasa Air Boeing 737 MAX" style="width: 100%; height: 180px; object-fit: cover; border-radius: 12px;">
+                                <span class="caption">Akasa Air Boeing 737 MAX (In Flight)</span>
+                            </div>
+                            
+                            <!-- Right: Animating Slideshow -->
+                            <div class="gallery-item slideshow-item">
+                                <div class="slideshow-container">
+                                    <div class="slide active">
+                                        <img src="akasa_real_1.jpg" alt="Akasa Air Boeing 737 MAX 8-200">
+                                        <span class="caption">Akasa Air Boeing 737 MAX 8-200 (Real Photo)</span>
+                                    </div>
+                                    <div class="slide">
+                                        <img src="akasa_real_2.jpg" alt="Akasa Air at Manohar Int'l Airport (Goa)">
+                                        <span class="caption">Akasa Air at Manohar Int'l Airport (Goa) (Real Photo)</span>
+                                    </div>
+                                    <div class="slide">
+                                        <img src="akasa_real_3.jpg" alt="Akasa Air Boeing 737 MAX 8 VT-YAO">
+                                        <span class="caption">Akasa Air Boeing 737 MAX 8 VT-YAO (Real Photo)</span>
+                                    </div>
+                                    <!-- User can drop their own files to expand the slideshow -->
+                                    <div class="slide">
+                                        <img src="my_akasa_2.jpg" alt="Abhishek M with Passengers at Kempegowda Int'l Airport (BLR)" onerror="this.style.display='none'; this.parentNode.style.display='none';">
+                                        <span class="caption">Abhishek M with Passengers at Kempegowda Int'l Airport (BLR)</span>
+                                    </div>
+                                    <div class="slide">
+                                        <img src="my_akasa_3.jpg" alt="Abhishek's Operations Capture" onerror="this.style.display='none'; this.parentNode.style.display='none';">
+                                        <span class="caption">Abhishek's Captured Operations (my_akasa_3.jpg)</span>
+                                    </div>
+                                    <div class="slide">
+                                        <img src="my_akasa_4.jpg" alt="Abhishek's Operations Capture" onerror="this.style.display='none'; this.parentNode.style.display='none';">
+                                        <span class="caption">Abhishek's Captured Operations (my_akasa_4.jpg)</span>
+                                    </div>
+                                </div>
+                                <div class="slideshow-controls">
+                                    <button class="slide-control-btn prev" id="prevSlide"><i data-lucide="chevron-left"></i></button>
+                                    <button class="slide-control-btn next" id="nextSlide"><i data-lucide="chevron-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live FIDS Section -->
+                    <div class="fids-board-container scroll-reveal" style="margin-top: 50px;">
+                        <div class="fids-header">
+                            <i data-lucide="radio" class="fids-icon pulsing-red"></i>
+                            <h3>BLR Live Flight Display Board</h3>
+                            <span class="fids-sub">Live Akasa Air Departures / Arrivals (Kempegowda Int'l Airport)</span>
+                        </div>
+                        <div class="fids-tabs">
+                            <button class="fids-tab-btn active" data-target="fidsDepartures">DEPARTURES</button>
+                            <button class="fids-tab-btn" data-target="fidsArrivals">ARRIVALS</button>
+                        </div>
+                        <div class="fids-board">
+                            <div class="fids-row fids-head">
+                                <span>FLIGHT</span>
+                                <span>STATION</span>
+                                <span>SCHEDULED</span>
+                                <span>GATE/BELT</span>
+                                <span>STATUS</span>
+                            </div>
+                            
+                            <!-- Departures Panel -->
+                            <div class="fids-panel active" id="fidsDepartures">
+                                <div class="fids-row">
+                                    <span class="flight-no">QP 1352</span>
+                                    <span class="station">MUMBAI (BOM)</span>
+                                    <span class="time">09:15 AM</span>
+                                    <span class="gate">Gate 12</span>
+                                    <span class="status boarding">BOARDING</span>
+                                </div>
+                                <div class="fids-row">
+                                    <span class="flight-no">QP 1506</span>
+                                    <span class="station">DELHI (DEL)</span>
+                                    <span class="time">10:30 AM</span>
+                                    <span class="gate">Gate 14</span>
+                                    <span class="status green">SCHEDULED</span>
+                                </div>
+                                <div class="fids-row">
+                                    <span class="flight-no">QP 1102</span>
+                                    <span class="station">KOCHI (COK)</span>
+                                    <span class="time">11:15 AM</span>
+                                    <span class="gate">Gate 08</span>
+                                    <span class="status green">SCHEDULED</span>
+                                </div>
+                                <div class="fids-row">
+                                    <span class="flight-no">QP 1734</span>
+                                    <span class="station">HYDERABAD (HYD)</span>
+                                    <span class="time">12:05 PM</span>
+                                    <span class="gate">Gate 15</span>
+                                    <span class="status delayed">DELAYED</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Arrivals Panel -->
+                            <div class="fids-panel" id="fidsArrivals">
+                                <div class="fids-row">
+                                    <span class="flight-no">QP 1351</span>
+                                    <span class="station">MUMBAI (BOM)</span>
+                                    <span class="time">08:45 AM</span>
+                                    <span class="gate">Belt 03</span>
+                                    <span class="status landed">LANDED</span>
+                                </div>
+                                <div class="fids-row">
+                                    <span class="flight-no">QP 1101</span>
+                                    <span class="station">KOCHI (COK)</span>
+                                    <span class="time">10:10 AM</span>
+                                    <span class="gate">Belt 01</span>
+                                    <span class="status landed">LANDED</span>
+                                </div>
+                                <div class="fids-row">
+                                    <span class="flight-no">QP 1242</span>
+                                    <span class="station">PUNE (PNQ)</span>
+                                    <span class="time">11:30 AM</span>
+                                    <span class="gate">Belt 05</span>
+                                    <span class="status green">ON TIME</span>
+                                </div>
+                                <div class="fids-row">
+                                    <span class="flight-no">QP 1435</span>
+                                    <span class="station">AHMEDABAD (AMD)</span>
+                                    <span class="time">12:45 PM</span>
+                                    <span class="gate">Belt 02</span>
+                                    <span class="status green">ON TIME</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Desk (Styled like an Airline Ticket Office) -->
+            <section id="contact" class="contact-section scroll-reveal">
+                <div class="section-container">
+                    <div class="section-header">
+                        <span class="section-tag">GET IN TOUCH</span>
+                        <h2 class="section-title">Abhishek's Desk</h2>
+                        <div class="title-underline"></div>
+                    </div>
+                    
+                    <div class="contact-grid">
+                        <!-- Left: Info panel -->
+                        <div class="support-info-card">
+                            <h3>Connect with Abhishek M</h3>
+                            <p>Looking to collaborate, discuss aviation operations, or network? Drop a message below to connect directly with Abhishek.</p>
+                            
+                            <div class="info-items">
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i data-lucide="mail-open"></i>
+                                    </div>
+                                    <div class="info-text">
+                                        <span>INBOX / EMAIL</span>
+                                        <a href="mailto:dragokingsta@gmail.com">dragokingsta@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i data-lucide="map-pin"></i>
+                                    </div>
+                                    <div class="info-text">
+                                        <span>BASE STATION</span>
+                                        <span>Kempegowda Int'l Airport (BLR), Bengaluru</span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i data-lucide="linkedin"></i>
+                                    </div>
+                                    <div class="info-text">
+                                        <span>OFFICIAL NETWORKING</span>
+                                        <a href="https://www.linkedin.com/in/abhishek-m-29b90a256/" target="_blank" rel="noopener noreferrer">Abhishek M on LinkedIn</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Contact Form styled like a ticket -->
+                        <div class="ticket-form-card">
+                            <div class="ticket-header">
+                                <h4>PORTFOLIO INQUIRY TICKET</h4>
+                                <span class="ticket-code">TKT-AM-2026</span>
+                            </div>
+                            <form class="ticket-form" id="contactForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="name">SENDER NAME</label>
+                                        <div class="input-wrapper">
+                                            <i data-lucide="user" class="input-icon"></i>
+                                            <input type="text" id="name" required placeholder="Enter your name">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="email">SENDER EMAIL</label>
+                                        <div class="input-wrapper">
+                                            <i data-lucide="mail" class="input-icon"></i>
+                                            <input type="email" id="email" required placeholder="name@company.com">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="subject">QUERY TYPE</label>
+                                        <div class="input-wrapper">
+                                            <i data-lucide="help-circle" class="input-icon"></i>
+                                            <select id="subject" required>
+                                                <option value="" disabled selected>Select networking topic</option>
+                                                <option value="Collaboration Opportunity">Professional Collaboration</option>
+                                                <option value="Aviation Discussion">Aviation Discussion</option>
+                                                <option value="General Support">General Inquiry / Networking</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="message">DETAILED MESSAGE</label>
+                                        <div class="input-wrapper text-area-wrapper">
+                                            <textarea id="message" rows="4" required placeholder="Provide details of your message..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="submit-ticket-btn" id="submitBtn">
+                                    <span>CONFIRM MESSAGE REQUEST</span>
+                                    <i data-lucide="send" class="btn-icon-right"></i>
+                                </button>
+                            </form>
+                            
+                            <!-- Success ticket display -->
+                            <div class="ticket-success-card hidden" id="ticketSuccess">
+                                <div class="success-ticket-header">
+                                    <i data-lucide="check-circle" class="success-icon"></i>
+                                    <h3>MESSAGE QUEUED</h3>
+                                    <p>Your message has been sent to Abhishek's queue!</p>
+                                </div>
+                                <div class="success-ticket-details">
+                                    <div class="ticket-field">
+                                        <span>SENDER</span>
+                                        <strong id="successName"></strong>
+                                    </div>
+                                    <div class="ticket-field">
+                                        <span>STATUS</span>
+                                        <strong class="green-text">QUEUED FOR ABHISHEK M</strong>
+                                    </div>
+                                    <div class="ticket-field">
+                                        <span>DATE & TIME</span>
+                                        <strong id="successTime"></strong>
+                                    </div>
+                                </div>
+                                <button class="reset-ticket-btn" id="resetTicketBtn">Send another message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <div class="footer-logo-animate">
+                        <img src="logo.png" alt="Akasa Air Logo" class="footer-logo-img">
+                    </div>
+                    <div class="footer-title-text">
+                        <span class="footer-name">Abhishek M</span>
+                        <span class="footer-dot-sep"></span>
+                        <span class="footer-role">Customer Service Officer</span>
+                        <span class="footer-dot-sep"></span>
+                        <span class="footer-airline">Akasa Air</span>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 Abhishek M. All Rights Reserved. Akasa Air logos, brandings, and plane graphics are properties of Akasa Air.</p>
+                    <div class="footer-links">
+                        <a href="https://www.linkedin.com/in/abhishek-m-29b90a256/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a href="#home">Back to Top</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script file -->
+    <script src="script.js"></script>
+</body>
+</html>
