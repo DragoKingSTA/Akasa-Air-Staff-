@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Operational Fleet and Routes tracker for Akasa Air. Check active aircraft registrations and routes.">
+    <title>Akasa Air | Fleet & Routes Tracker</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Icons (Lucide Icons via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="sky-background">
+        <div class="clouds"></div>
+        <div class="sky-glow-gold"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <a href="index.html" class="header-logo">
+                <span class="logo-dot orange"></span>
+                <span class="logo-dot purple"></span>
+                <span class="logo-text">ABHISHEK M</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#roles" class="nav-link">Roles</a>
+                <a href="index.html#brand" class="nav-link active">Akasa Air</a>
+                <a href="index.html#contact" class="nav-link booking-btn">Contact Desk</a>
+            </nav>
+            <div class="header-clock" id="headerClock">
+                <i data-lucide="clock" class="clock-icon"></i>
+                <span class="time-display" id="timeDisplay">12:00:00 AM</span>
+                <span class="date-display" id="dateDisplay">10 JUN 2026</span>
+                <span class="pax-badge" id="paxBadge">Passenger: Guest</span>
+            </div>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html#home" class="mobile-nav-link">Home</a>
+        <a href="index.html#about" class="mobile-nav-link">About</a>
+        <a href="index.html#roles" class="mobile-nav-link">Roles</a>
+        <a href="index.html#brand" class="mobile-nav-link">Akasa Air</a>
+        <a href="index.html#contact" class="mobile-nav-link">Contact Desk</a>
+    </div>
+
+    <main style="padding-top: 100px; min-height: 100vh;">
+        <div class="section-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
+            
+            <!-- Back Button link -->
+            <a href="index.html#brand" class="back-link" style="display: inline-flex; align-items: center; gap: 8px; color: var(--color-orange); font-weight: 700; margin-bottom: 25px; transition: transform 0.3s ease;">
+                <i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+                <span>Back to Operations Portfolio</span>
+            </a>
+
+            <div class="section-header" style="text-align: left; margin-bottom: 40px;">
+                <span class="section-tag">LIVE FLEET & NETWORK DATABASE</span>
+                <h2 class="section-title" style="margin-left: 0;">Akasa Air Operational Fleet</h2>
+                <div class="title-underline" style="margin: 10px 0 0 0;"></div>
+            </div>
+
+            <!-- Operational Statistics Cards -->
+            <div class="fleet-stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper purple-bg">
+                        <i data-lucide="plane"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-num">38</span>
+                        <span class="stat-label">Active Boeing 737 MAX Fleet</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper orange-bg">
+                        <i data-lucide="map-pin"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-num">31</span>
+                        <span class="stat-label">Served Stations (Domestic & Int'l)</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper gold-bg">
+                        <i data-lucide="rocket"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-num">226</span>
+                        <span class="stat-label">Firm Ordered Aircraft Pipeline</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon-wrapper green-bg">
+                        <i data-lucide="globe"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-num">7</span>
+                        <span class="stat-label">Active International Stations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Route and Flights Section -->
+            <div class="tracker-layout" style="margin-top: 50px;">
+                
+                <!-- Left: Flight Search & Results -->
+                <div class="flight-search-container">
+                    <div class="search-header-box">
+                        <h3>Operational Flight Route Lookup</h3>
+                        <p>Search active operational flight numbers, bases, destinations, or travel route directions.</p>
+                        
+                        <div class="search-wrapper">
+                            <i data-lucide="search" class="search-icon"></i>
+                            <input type="text" id="flightSearchInput" placeholder="Search by flight number, city, or airport code (e.g. BOM, Kochi)...">
+                        </div>
+
+                        <div class="filter-btn-group">
+                            <button class="filter-btn active" data-filter="all">All Flights</button>
+                            <button class="filter-btn" data-filter="domestic">Domestic</button>
+                            <button class="filter-btn" data-filter="international">International</button>
+                            <button class="filter-btn" data-filter="blr">BLR Station base</button>
+                        </div>
+                    </div>
+
+                    <div class="flights-table-card">
+                        <div class="flights-table-header">
+                            <span>FLIGHT NO</span>
+                            <span>ORIGIN BASE</span>
+                            <span>DESTINATION</span>
+                            <span>ROUTE TYPE</span>
+                            <span>STATUS</span>
+                        </div>
+                        <div class="flights-table-body" id="flightsTableBody">
+                            <!-- Populated dynamically by javascript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Fleet Registry details -->
+                <div class="registry-container">
+                    <div class="registry-card">
+                        <h3>Boeing 737 MAX Active Registry</h3>
+                        <p>Listing of active operational registrations currently deployed in flight service.</p>
+                        <div class="registry-list" id="registryList">
+                            <!-- Populated dynamically by javascript -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo-animate">
+                    <img src="logo.png" alt="Akasa Air Logo" class="footer-logo-img">
+                </div>
+                <div class="footer-title-text">
+                    <span class="footer-name">Abhishek M</span>
+                    <span class="footer-dot-sep"></span>
+                    <span class="footer-role">Customer Service Officer</span>
+                    <span class="footer-dot-sep"></span>
+                    <span class="footer-airline">Akasa Air</span>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Abhishek M. All Rights Reserved. Akasa Air logos, brandings, and plane graphics are properties of Akasa Air.</p>
+                <div class="footer-links">
+                    <a href="https://www.linkedin.com/in/abhishek-m-29b90a256/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="index.html#home">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="fleet.js"></script>
+</body>
+</html>
