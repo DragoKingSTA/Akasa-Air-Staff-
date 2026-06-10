@@ -375,71 +375,198 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 10. FIDS Live Status Updates Simulation
-    function simulateFIDSUpdates() {
-        const panels = ['fidsDepartures', 'fidsArrivals'];
-        const randomPanelId = panels[Math.floor(Math.random() * panels.length)];
-        const panelEl = document.getElementById(randomPanelId);
-        if (!panelEl) return;
+    // 10. FIDS Dynamic Live Board
+    const destinations = [
+        { city: "MUMBAI", code: "BOM" },
+        { city: "DELHI", code: "DEL" },
+        { city: "KOCHI", code: "COK" },
+        { city: "HYDERABAD", code: "HYD" },
+        { city: "PUNE", code: "PNQ" },
+        { city: "AHMEDABAD", code: "AMD" },
+        { city: "GOA", code: "GOI" },
+        { city: "KOLKATA", code: "CCU" }
+    ];
 
-        const rows = panelEl.querySelectorAll('.fids-row');
-        if (rows.length === 0) return;
+    let departuresList = [];
+    let arrivalsList = [];
 
-        // Choose a random flight row
-        const randomRow = rows[Math.floor(Math.random() * rows.length)];
-        const statusEl = randomRow.querySelector('.status');
-        const flightNoEl = randomRow.querySelector('.flight-no');
+    function formatFIDSTime(date) {
+        let hours = date.getHours();
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        return `${String(hours).padStart(2, '0')}:${minutes} ${ampm}`;
+    }
 
-        if (statusEl && flightNoEl) {
-            const currentStatus = statusEl.textContent.trim();
-            const isDeparture = randomPanelId === 'fidsDepartures';
-            
-            // Randomly update status to simulate real terminal operations
-            if (isDeparture) {
-                const departureStatuses = ['SCHEDULED', 'BOARDING', 'DELAYED', 'DEPARTED'];
-                let nextStatus = currentStatus;
-                
-                if (currentStatus === 'BOARDING') {
-                    nextStatus = 'DEPARTED';
-                } else if (currentStatus === 'SCHEDULED') {
-                    nextStatus = Math.random() > 0.8 ? 'DELAYED' : 'BOARDING';
-                } else if (currentStatus === 'DELAYED') {
-                    nextStatus = 'BOARDING';
-                } else if (currentStatus === 'DEPARTED') {
-                    nextStatus = 'SCHEDULED';
-                }
-                
-                statusEl.textContent = nextStatus;
-                statusEl.className = 'status'; // clear previous classes
-                if (nextStatus === 'BOARDING') statusEl.classList.add('boarding');
-                else if (nextStatus === 'SCHEDULED') statusEl.classList.add('green');
-                else if (nextStatus === 'DELAYED') statusEl.classList.add('delayed');
-                else if (nextStatus === 'DEPARTED') statusEl.classList.add('landed');
-                
-            } else {
-                const arrivalStatuses = ['ON TIME', 'LANDED', 'DELAYED'];
-                let nextStatus = currentStatus;
-                
-                if (currentStatus === 'LANDED') {
-                    nextStatus = 'ON TIME';
-                } else if (currentStatus === 'ON TIME') {
-                    nextStatus = Math.random() > 0.85 ? 'DELAYED' : 'LANDED';
-                } else if (currentStatus === 'DELAYED') {
-                    nextStatus = 'LANDED';
-                }
-                
-                statusEl.textContent = nextStatus;
-                statusEl.className = 'status'; // clear previous classes
-                if (nextStatus === 'ON TIME') statusEl.classList.add('green');
-                else if (nextStatus === 'LANDED') statusEl.classList.add('landed');
-                else if (nextStatus === 'DELAYED') statusEl.classList.add('delayed');
+    function createRandomFlight(isDeparture, baseTime) {
+        const dest = destinations[Math.floor(Math.random() * destinations.length)];
+        const flightNum = 1000 + Math.floor(Math.random() * 900);
+        
+        let status = "SCHEDULED";
+        let statusClass = "green";
+        
+        if (isDeparture) {
+            const timeDiff = (baseTime.getTime() - new Date().getTime()) / 60000;
+            if (timeDiff <= 0) {
+                status = "DEPARTED";
+                statusClass = "landed";
+            } else if (timeDiff < 20) {
+                status = "BOARDING";
+                statusClass = "boarding";
+            } else if (Math.random() > 0.85) {
+                status = "DELAYED";
+                statusClass = "delayed";
+                baseTime.setMinutes(baseTime.getMinutes() + 25); // delay it
             }
+        } else {
+            const timeDiff = (baseTime.getTime() - new Date().getTime()) / 60000;
+            if (timeDiff <= -5) {
+                status = "LANDED";
+                statusClass = "landed";
+            } else if (timeDiff <= 5 && timeDiff > -5) {
+                status = "ON TIME";
+                statusClass = "green";
+            } else if (Math.random() > 0.85) {
+                status = "DELAYED";
+                statusClass = "delayed";
+                baseTime.setMinutes(baseTime.getMinutes() + 20); // delay it
+            } else {
+                status = "ON TIME";
+                statusClass = "green";
+            }
+        }
+
+        return {
+            flightNo: `QP ${flightNum}`,
+            station: `${dest.city} (${dest.code})`,
+            time: baseTime,
+            gateBelt: isDeparture ? `Gate ${String(Math.floor(Math.random() * 18) + 1).padStart(2, '0')}` : `Belt ${String(Math.floor(Math.random() * 8) + 1).padStart(2, '0')}`,
+            status: status,
+            statusClass: statusClass
+        };
+    }
+
+    function initFIDSLists() {
+        const now = new Date();
+        departuresList = [];
+        arrivalsList = [];
+        
+        // Departures (next 2-3 hours)
+        for (let i = 0; i < 4; i++) {
+            const flightTime = new Date(now.getTime() + (20 + i * 40) * 60000);
+            departuresList.push(createRandomFlight(true, flightTime));
+        }
+
+        // Arrivals (recent and next 2 hours)
+        for (let i = 0; i < 4; i++) {
+            const flightTime = new Date(now.getTime() + (-10 + i * 40) * 60000);
+            arrivalsList.push(createRandomFlight(false, flightTime));
+        }
+
+        renderFIDS();
+    }
+
+    function renderFIDS() {
+        const depPanel = document.getElementById('fidsDepartures');
+        const arrPanel = document.getElementById('fidsArrivals');
+
+        if (depPanel) {
+            depPanel.innerHTML = departuresList.map(f => `
+                <div class="fids-row">
+                    <span class="flight-no">${f.flightNo}</span>
+                    <span class="station">${f.station}</span>
+                    <span class="time">${formatFIDSTime(f.time)}</span>
+                    <span class="gate">${f.gateBelt}</span>
+                    <span class="status ${f.statusClass}">${f.status}</span>
+                </div>
+            `).join('');
+        }
+
+        if (arrPanel) {
+            arrPanel.innerHTML = arrivalsList.map(f => `
+                <div class="fids-row">
+                    <span class="flight-no">${f.flightNo}</span>
+                    <span class="station">${f.station}</span>
+                    <span class="time">${formatFIDSTime(f.time)}</span>
+                    <span class="gate">${f.gateBelt}</span>
+                    <span class="status ${f.statusClass}">${f.status}</span>
+                </div>
+            `).join('');
+        }
+    }
+
+    function updateFIDSBoard() {
+        const now = new Date();
+        let changed = false;
+        
+        // Update Departures
+        departuresList.forEach((f, idx) => {
+            const timeDiff = (f.time.getTime() - now.getTime()) / 60000;
             
-            // Subtle flash animation on change
-            randomRow.style.backgroundColor = 'rgba(255, 109, 0, 0.08)';
+            if (f.status === "SCHEDULED" && timeDiff < 20 && timeDiff > 0) {
+                f.status = "BOARDING";
+                f.statusClass = "boarding";
+                changed = true;
+                triggerRowFlash('fidsDepartures', idx);
+            } else if (f.status === "BOARDING" && timeDiff <= 0) {
+                f.status = "DEPARTED";
+                f.statusClass = "landed";
+                changed = true;
+                triggerRowFlash('fidsDepartures', idx);
+            }
+        });
+
+        // Check if the top departure has been DEPARTED for more than 2 minutes, replace it
+        if (departuresList.length > 0 && departuresList[0].status === "DEPARTED") {
+            const timeDiff = (now.getTime() - departuresList[0].time.getTime()) / 60000;
+            if (timeDiff > 2) {
+                departuresList.shift();
+                const lastTime = departuresList[departuresList.length - 1].time;
+                const nextTime = new Date(lastTime.getTime() + 40 * 60000);
+                departuresList.push(createRandomFlight(true, nextTime));
+                changed = true;
+            }
+        }
+
+        // Update Arrivals
+        arrivalsList.forEach((f, idx) => {
+            const timeDiff = (f.time.getTime() - now.getTime()) / 60000;
+            
+            if (f.status === "ON TIME" && timeDiff <= 0) {
+                f.status = "LANDED";
+                f.statusClass = "landed";
+                changed = true;
+                triggerRowFlash('fidsArrivals', idx);
+            }
+        });
+
+        // Check if the top arrival has been LANDED for more than 2 minutes, replace it
+        if (arrivalsList.length > 0 && arrivalsList[0].status === "LANDED") {
+            const timeDiff = (now.getTime() - arrivalsList[0].time.getTime()) / 60000;
+            if (timeDiff > 2) {
+                arrivalsList.shift();
+                const lastTime = arrivalsList[arrivalsList.length - 1].time;
+                const nextTime = new Date(lastTime.getTime() + 40 * 60000);
+                arrivalsList.push(createRandomFlight(false, nextTime));
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            renderFIDS();
+        }
+    }
+
+    function triggerRowFlash(panelId, rowIdx) {
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+        const rows = panel.querySelectorAll('.fids-row');
+        if (rows[rowIdx]) {
+            rows[rowIdx].style.backgroundColor = 'rgba(255, 109, 0, 0.12)';
             setTimeout(() => {
-                randomRow.style.backgroundColor = 'transparent';
-            }, 800);
+                rows[rowIdx].style.backgroundColor = 'transparent';
+            }, 1200);
         }
     }
 
@@ -543,6 +670,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('load', initSlideshow);
     setTimeout(initSlideshow, 1000);
 
-    // Run status updates simulation every 8 seconds
-    setInterval(simulateFIDSUpdates, 8000);
+    // Initialize FIDS dynamic data
+    initFIDSLists();
+    // Run status updates simulation every 10 seconds
+    setInterval(updateFIDSBoard, 10000);
 });
